@@ -1,3 +1,4 @@
+/*11111*/
 create table tuser( 
 userid primary key varchar(36),
 用户名 varchar(30),
