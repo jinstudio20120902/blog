@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pushhand.blog.mapper.TcommentMapper" >
+  <resultMap id="BaseResultMap" type="cn.pushhand.blog.model.Tcomment" >
+    <id column="vc_commentid" property="vcCommentid" jdbcType="VARCHAR" />
+    <result column="vc_commentcontent" property="vcCommentcontent" jdbcType="VARCHAR" />
+    <result column="dt_comenttime" property="dtComenttime" jdbcType="TIMESTAMP" />
+    <result column="vc_visitor" property="vcVisitor" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    vc_commentid, vc_commentcontent, dt_comenttime, vc_visitor
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.pushhand.blog.model.TcommentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tcomment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tcomment
+    where vc_commentid = #{vcCommentid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tcomment
+    where vc_commentid = #{vcCommentid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.pushhand.blog.model.TcommentExample" >
+    delete from tcomment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.pushhand.blog.model.Tcomment" >
+    insert into tcomment (vc_commentid, vc_commentcontent, dt_comenttime, 
+      vc_visitor)
+    values (#{vcCommentid,jdbcType=VARCHAR}, #{vcCommentcontent,jdbcType=VARCHAR}, #{dtComenttime,jdbcType=TIMESTAMP}, 
+      #{vcVisitor,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.pushhand.blog.model.Tcomment" >
+    insert into tcomment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="vcCommentid != null" >
+        vc_commentid,
+      </if>
+      <if test="vcCommentcontent != null" >
+        vc_commentcontent,
+      </if>
+      <if test="dtComenttime != null" >
+        dt_comenttime,
+      </if>
+      <if test="vcVisitor != null" >
+        vc_visitor,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="vcCommentid != null" >
+        #{vcCommentid,jdbcType=VARCHAR},
+      </if>
+      <if test="vcCommentcontent != null" >
+        #{vcCommentcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="dtComenttime != null" >
+        #{dtComenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vcVisitor != null" >
+        #{vcVisitor,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.pushhand.blog.model.TcommentExample" resultType="java.lang.Integer" >
+    select count(*) from tcomment
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tcomment
+    <set >
+      <if test="record.vcCommentid != null" >
+        vc_commentid = #{record.vcCommentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vcCommentcontent != null" >
+        vc_commentcontent = #{record.vcCommentcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dtComenttime != null" >
+        dt_comenttime = #{record.dtComenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.vcVisitor != null" >
+        vc_visitor = #{record.vcVisitor,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tcomment
+    set vc_commentid = #{record.vcCommentid,jdbcType=VARCHAR},
+      vc_commentcontent = #{record.vcCommentcontent,jdbcType=VARCHAR},
+      dt_comenttime = #{record.dtComenttime,jdbcType=TIMESTAMP},
+      vc_visitor = #{record.vcVisitor,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.pushhand.blog.model.Tcomment" >
+    update tcomment
+    <set >
+      <if test="vcCommentcontent != null" >
+        vc_commentcontent = #{vcCommentcontent,jdbcType=VARCHAR},
+      </if>
+      <if test="dtComenttime != null" >
+        dt_comenttime = #{dtComenttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vcVisitor != null" >
+        vc_visitor = #{vcVisitor,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where vc_commentid = #{vcCommentid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.pushhand.blog.model.Tcomment" >
+    update tcomment
+    set vc_commentcontent = #{vcCommentcontent,jdbcType=VARCHAR},
+      dt_comenttime = #{dtComenttime,jdbcType=TIMESTAMP},
+      vc_visitor = #{vcVisitor,jdbcType=VARCHAR}
+    where vc_commentid = #{vcCommentid,jdbcType=VARCHAR}
+  </update>
+</mapper>
