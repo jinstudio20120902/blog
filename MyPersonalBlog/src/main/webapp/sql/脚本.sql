@@ -6,7 +6,7 @@ GRANT ALL ON *.* TO 'blog'@'localhost';
 /*创建用户表*/
 create table tuser( 
 vc_userid  varchar(36) primary key not null,/*用户id*/
-vc_username varchar(32) not null,/*用户名*/
+vc_username varchar(32) unique not null,/*用户名*/
 vc_password varchar(32) not null/*密码*/
 );
 
