@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pushhand.blog.mapper.TUserQueryMapper" >
+
+  <resultMap id="BaseResultMap" type="cn.pushhand.blog.model.TuserVo" >
+    <id column="vc_userid" property="vcUserid" jdbcType="VARCHAR" />
+    <result column="vc_username" property="vcUsername" jdbcType="VARCHAR" />
+    <result column="vc_password" property="vcPassword" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List" >
+    vc_userid, vc_username, vc_password
+  </sql>
+  
+  <!-- 根据用户名查询用户 -->
+  <select id="findUserByUserName" parameterType="java.lang.String" 
+  		  resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List"></include>
+  	from tuser
+  	where vc_username = #{vc_username,jdbcType=VARCHAR}
+  
+  </select>
+  
+  
+  
+ 
+</mapper>
