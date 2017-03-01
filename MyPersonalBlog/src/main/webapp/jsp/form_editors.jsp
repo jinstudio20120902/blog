@@ -95,20 +95,29 @@
 			</div>
 			
 			<div class="ibox-content">
-                    <p>
-                        <a class="btn btn-info btn-rounded" >java</a>
+                    <p id="mylable">
+                        <!--
+						<a class="btn btn-info btn-rounded" >java</a>
 						<a class="btn btn-info btn-rounded" >框架</a>
 						<a class="btn btn-info btn-rounded" >开发语言</a>
+						-->
                     </p>
 
                     <h3 class="font-bold">选择标签</h3>
                     <p>
-                        <button type="button" class="btn btn-outline btn-default">默认</button>
-                        <button type="button" class="btn btn-outline btn-primary">主要</button>
-                        <button type="button" class="btn btn-outline btn-success">成功</button>
-                        <button type="button" class="btn btn-outline btn-info">信息</button>
-                        <button type="button" class="btn btn-outline btn-warning">警告</button>
-                        <button type="button" class="btn btn-outline btn-danger">危险</button>
+					
+						<c:forEach items="${lables }" var="lable">
+							<button type="button" onclick="selectLable(this)" class="btn btn-outline btn-info">${lable.vcLablename}</button>
+							<span hidden id="lableid">${lable.vcLableid}</span>
+						</c:forEach>
+						<!--
+	                        <button type="button" class="btn btn-outline btn-default">默认</button>
+	                        <button type="button" class="btn btn-outline btn-primary">主要</button>
+	                        <button type="button" class="btn btn-outline btn-success">成功</button>
+	                        <button type="button" class="btn btn-outline btn-info">信息</button>
+	                        <button type="button" class="btn btn-outline btn-warning">警告</button>
+	                        <button type="button" class="btn btn-outline btn-danger">危险</button>
+						-->
                     </p>
                     
                     <p>
@@ -161,18 +170,27 @@
 	<script language="javascript">
 
 		function selectType(obj){
-			console.log(obj);
-			
-			
+
 			var type = $(obj).text();
-			
-		
-			
+
 			$(".input-group-btn button").text(type);
+
+		}
+		
+		
+		function selectLable(obj){
+			var lable = $(obj).text(); 
+			/*var mylable = $(".mylable").text();
+			if( mylable !== null || mylable !== undefined || mylable !== ''){
+				mylable = mylable + "," + lable;
+			}else{
+				mylable = lable;
+			}
 			
+			console.log(mylable);*/
 			
-			
-			
+			$("#mylable").append("<a class=\"btn btn-info btn-rounded\" >"+lable+"</a>");
+			$(obj).remove();
 		}
 	
 		function sendFile(file) {
@@ -216,7 +234,7 @@
 						{
 							alert("发表成功");
 							//刷新页面
-							window.location.href ="${pageContext.request.contextPath}/findAllArticleType.action";
+							window.location.href ="${pageContext.request.contextPath}/admin/writearticle.action";
 						}
 					},
 					error:function(ajaxobj)

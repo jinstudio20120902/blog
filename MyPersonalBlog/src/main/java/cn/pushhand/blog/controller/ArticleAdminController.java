@@ -2,7 +2,9 @@ package cn.pushhand.blog.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.pushhand.blog.model.Tarticle;
+import cn.pushhand.blog.model.Tarticletype;
+import cn.pushhand.blog.model.Tlable;
 import cn.pushhand.blog.model.Tuser;
 import cn.pushhand.blog.service.ArticleService;
+import cn.pushhand.blog.service.ArticleTypeService;
+import cn.pushhand.blog.service.LableService;
 import cn.pushhand.blog.util.Result;
 import net.sf.json.JSONObject;
 
@@ -32,9 +38,38 @@ public class ArticleAdminController {
 	
 	@Autowired
 	private ArticleService articleService;
+	@Autowired
+	private ArticleTypeService  articleTypeService ;
+	@Autowired
+	private LableService lableService;
+	
+	
 	
 	/*
-	 * 新增博文
+	 * 写文章页面
+	 *	1、获取文章类型
+	 *	2、获取标签
+	 */
+	@RequestMapping("/admin/writearticle")
+	public String WriteArticle(HttpServletRequest request ,
+			HttpServletResponse response){
+		
+		//获取文章类型 
+		List<Tarticletype> aTarticletypes = new ArrayList<Tarticletype>();
+		aTarticletypes = articleTypeService.findAllArticleTypes();
+		request.setAttribute("articletypes", aTarticletypes);
+		
+		//获取文章标签
+		List<Tlable> lables = new ArrayList<Tlable>();
+		lables = lableService.findAllLables();
+		request.setAttribute("lables", lables);
+		
+		return "form_editors";
+		
+	}
+	
+	/*
+	 * 保存博文
 	 */
 	@RequestMapping("/admin/savearticle")
 	@ResponseBody

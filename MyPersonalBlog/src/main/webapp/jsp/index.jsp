@@ -78,7 +78,7 @@
                     </li>
 					<!-- 写博客 -->
 					<li>
-                        <a class="J_menuItem" href="${pageContext.request.contextPath}/findAllArticleType.action"><i class="fa fa-edit"></i> <span class="nav-label">写博客</span></a>
+                        <a class="J_menuItem" href="${pageContext.request.contextPath}/admin/writearticle.action"><i class="fa fa-edit"></i> <span class="nav-label">写博客</span></a>
                     </li>
                  
 					
