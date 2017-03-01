@@ -30,19 +30,15 @@ public class ArticleTypeController {
 	 * 查询所有的文章类别
 	 */
 	@RequestMapping("/findAllArticleType")
-	@ResponseBody
-	public Result findAllArticleType(HttpServletRequest request ,
+	public String findAllArticleType(HttpServletRequest request ,
 			HttpServletResponse response){
-		Result result = new Result();
 		
 		List<Tarticletype> aTarticletypes = new ArrayList<Tarticletype>();
 		aTarticletypes = articleTypeService.findAllArticleTypes();
 		
 		request.setAttribute("articletypes", aTarticletypes);
 		
-		result.setStatus(1);
-		
-		return result;
+		return "form_editors";
 		
 	}
 	

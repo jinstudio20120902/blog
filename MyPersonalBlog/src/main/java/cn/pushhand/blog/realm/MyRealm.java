@@ -44,7 +44,6 @@ public class MyRealm extends AuthorizingRealm {
 		
 		String username = (String) token.getPrincipal(); // 获取用户名
 		
-		System.out.println("当前用户名:"+ username);
 		//获取用户的信息
 		Tuser user = userService.findUserByName(username);
 

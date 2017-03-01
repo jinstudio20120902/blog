@@ -39,7 +39,7 @@ public class UserController {
 			 */
 			subject.login(token);
 			//验证成功，页面重定向
-			return "redirect:/jsp/main.jsp";
+			return "redirect:/jsp/index.jsp";
 		} catch (Exception e) {
 			//验证不成功，抛出异常,返回信息到登录页面
 			//这里其实不需要写返回到哪个页面，shiro配置已经帮我们做了

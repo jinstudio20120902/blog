@@ -1,5 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
+<%  
+	String path = request.getContextPath();  
+	String baseViewPath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/jsp/";  
+%> 
 
 <head>
     <meta charset="utf-8">
@@ -11,10 +17,10 @@
 
 
     <link rel="shortcut icon" href="favicon.ico">
-    <link href="css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
-    <link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
-    <link href="css/animate.min.css" rel="stylesheet">
-    <link href="css/style.min.css?v=4.0.0" rel="stylesheet">
+    <link href="<%=baseViewPath %>css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+    <link href="<%=baseViewPath %>css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="<%=baseViewPath %>css/animate.min.css" rel="stylesheet">
+    <link href="<%=baseViewPath %>css/style.min.css?v=4.0.0" rel="stylesheet">
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
@@ -72,7 +78,7 @@
                     </li>
 					<!-- 写博客 -->
 					<li>
-                        <a class="J_menuItem" href="layouts.html"><i class="fa fa-edit"></i> <span class="nav-label">写博客</span></a>
+                        <a class="J_menuItem" href="${pageContext.request.contextPath}/findAllArticleType.action"><i class="fa fa-edit"></i> <span class="nav-label">写博客</span></a>
                     </li>
                  
 					
@@ -318,14 +324,14 @@
         </div>
         
     </div>
-    <script src="js/jquery.min.js?v=2.1.4"></script>
-    <script src="js/bootstrap.min.js?v=3.3.5"></script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="js/plugins/layer/layer.min.js"></script>
-    <script src="js/hplus.min.js?v=4.0.0"></script>
-    <script type="text/javascript" src="js/contabs.min.js"></script>
-    <script src="js/plugins/pace/pace.min.js"></script>
+    <script src="<%=baseViewPath %>js/jquery.min.js?v=2.1.4"></script>
+    <script src="<%=baseViewPath %>js/bootstrap.min.js?v=3.3.5"></script>
+    <script src="<%=baseViewPath %>js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="<%=baseViewPath %>js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="<%=baseViewPath %>js/plugins/layer/layer.min.js"></script>
+    <script src="<%=baseViewPath %>js/hplus.min.js?v=4.0.0"></script>
+    <script type="text/javascript" src="<%=baseViewPath %>js/contabs.min.js"></script>
+    <script src="<%=baseViewPath %>js/plugins/pace/pace.min.js"></script>
 </body>
 
 </html>
