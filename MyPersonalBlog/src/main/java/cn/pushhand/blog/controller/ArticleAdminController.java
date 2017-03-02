@@ -1,7 +1,6 @@
 package cn.pushhand.blog.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -13,10 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -119,9 +116,10 @@ public class ArticleAdminController {
 		//添加文章标签
 		Iterator<String> it = lableids.iterator();
 		while(it.hasNext()){
-			if(it.next() != null){
+			String val = it.next();
+			if( val != null){
 				Tarticlelable tarticlelable = new Tarticlelable();
-				tarticlelable.setVcLableid(it.next());
+				tarticlelable.setVcLableid(val);
 				tarticlelable.setVcArticleid(tarticle.getVcArticleid());
 				tarticleLableList.add(tarticlelable);
 			}

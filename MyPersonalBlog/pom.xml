@@ -87,14 +87,14 @@
 			<version>1.2.2</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>3.0-alpha-1</version>
+		    <groupId>org.apache.tomcat</groupId>
+		    <artifactId>servlet-api</artifactId>
+		    <version>6.0.48</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.apache.tomcat</groupId>
-		    <artifactId>tomcat-jsp-api</artifactId>
-		    <version>9.0.0.M17</version>
+		    <artifactId>jsp-api</artifactId>
+		    <version>6.0.48</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
