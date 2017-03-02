@@ -42,8 +42,9 @@
 									</button>
 									<ul class="dropdown-menu pull-right">
 										
-										<c:forEach items="${articletypes }" var="articletype">
-											<li><a onclick="selectType(this)">${articletype.vcTypename }</a></li><span hidden id="articletypeid">${articletype.vcTypeid }</span>
+										<c:forEach items="${articletypes }" var="articletype" varStatus="status">
+											<li><a onclick="selectType(this)" data-typeid="${articletype.vcTypeid }">${articletype.vcTypename }</a></li>
+											<!--<span hidden id="articletypeid${status.index }"></span>-->
 										</c:forEach>
 										
 							
@@ -104,11 +105,12 @@
                     </p>
 
                     <h3 class="font-bold">选择标签</h3>
-                    <p>
+                    <p id="alllable">
 					
-						<c:forEach items="${lables }" var="lable">
-							<button type="button" onclick="selectLable(this)" class="btn btn-outline btn-info">${lable.vcLablename}</button>
-							<span hidden id="lableid">${lable.vcLableid}</span>
+						<c:forEach items="${lables }" var="lable" varStatus="status">
+							<button type="button" onclick="selectLable(this)" class="btn btn-outline btn-info" data-lableid="${lable.vcLableid}">
+								${lable.vcLablename}
+							</button>
 						</c:forEach>
 						<!--
 	                        <button type="button" class="btn btn-outline btn-default">默认</button>
@@ -169,29 +171,37 @@
 
 	<script language="javascript">
 
+		//选择类型 
 		function selectType(obj){
 
 			var type = $(obj).text();
+			var typeid = $(obj).data("typeid");
 
 			$(".input-group-btn button").text(type);
+			$(".input-group-btn button").data("typeid" , typeid);//设置id
+			$(".input-group-btn button").append("<span class=\"caret\"></span>");
+			
 
 		}
 		
-		
+		//添加 标签
 		function selectLable(obj){
 			var lable = $(obj).text(); 
-			/*var mylable = $(".mylable").text();
-			if( mylable !== null || mylable !== undefined || mylable !== ''){
-				mylable = mylable + "," + lable;
-			}else{
-				mylable = lable;
-			}
+			var lableid = $(obj).data("lableid"); //lableid
 			
-			console.log(mylable);*/
-			
-			$("#mylable").append("<a class=\"btn btn-info btn-rounded\" >"+lable+"</a>");
+			$("#mylable").append("<a class=\"btn btn-info btn-rounded\" onclick=\"deleteLable(this)\" data-lableid="+lableid+">"+lable+"</a>");
 			$(obj).remove();
 		}
+		
+		//删除标签
+		function deleteLable(obj){
+			var lable = $(obj).text();
+			var lableid = $(obj).data("lableid"); //lableid
+			console.log(lableid);
+			$("#alllable").append("<button type=\"button\" onclick=\"selectLable(this)\" class=\"btn btn-outline btn-info\" data-lableid="+lableid+">"+lable+"</button>");
+			$(obj).remove();
+		}
+		
 	
 		function sendFile(file) {
 			data = new FormData();
@@ -210,17 +220,27 @@
 			});
 		}
 		
+		//提交，新增博客
 		function submit(){
 			var articletitle = $("#articletitle").val();
-			var articletype = $("#articletypeid").text();
+			var articletype = $(".input-group-btn button").data("typeid");//id存放在data当中	
 			var articlecontent = $('.summernote').code();
-
+			//获取标签, 是一个List，需要循环遍历
+			
+			var vcLableid = ""; 
+			$("#mylable").children().each(function(){
+				var lable = $(this).data("lableid");
+				console.log(lable);
+				if (lable !== null || lable !== undefined || lable !== '') {
+					vcLableid = vcLableid  + $(this).data("lableid") + ",";
+				}	
+			});
+			console.log(vcLableid);
 			$.ajax({ 
 					url:"${pageContext.request.contextPath}/admin/savearticle.action",
 					type:"POST",
-					data:{'vcArticletitle' : articletitle,'cArticletype' : articletype,'vcArticlecontent' : articlecontent },
+					data:{'vcArticletitle' : articletitle,'cArticletype' : articletype,'vcArticlecontent' : articlecontent ,'vcLableid' : vcLableid},
 					success: function(data){
-						console.log(data);
 						//假设返回的json数据里有status及info2个属性
 						//有时候可以直接ajaxobj.status或者ajaxobj["status"]去访问  
 						//但有时候，却要通过eval()或者 $.parsejson();才可以通过ajaxobj.status访问，而且这种情况下，需要是complete而不是success

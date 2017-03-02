@@ -3,7 +3,9 @@ package cn.pushhand.blog.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.pushhand.blog.model.Tarticle;
+import cn.pushhand.blog.model.Tarticlelable;
 import cn.pushhand.blog.model.Tarticletype;
 import cn.pushhand.blog.model.Tlable;
 import cn.pushhand.blog.model.Tuser;
+import cn.pushhand.blog.service.ArticleLable;
 import cn.pushhand.blog.service.ArticleService;
 import cn.pushhand.blog.service.ArticleTypeService;
 import cn.pushhand.blog.service.LableService;
@@ -42,7 +46,8 @@ public class ArticleAdminController {
 	private ArticleTypeService  articleTypeService ;
 	@Autowired
 	private LableService lableService;
-	
+	@Autowired
+	private ArticleLable articleLable;
 	
 	
 	/*
@@ -103,7 +108,30 @@ public class ArticleAdminController {
 		tarticle.setDtCreatetime(new Date());
 		tarticle.setDtPublishtime(new Date());
 		
-		articleService.AddArticle(tarticle);
+		//解析传入的lable id
+		//拆分,以逗号拆分
+		List<String> lableids = 
+				Arrays.asList(request.getParameter("vcLableid").toString().split(","));
+		
+		
+		List<Tarticlelable> tarticleLableList = new ArrayList<Tarticlelable>();
+		
+		//添加文章标签
+		Iterator<String> it = lableids.iterator();
+		while(it.hasNext()){
+			if(it.next() != null){
+				Tarticlelable tarticlelable = new Tarticlelable();
+				tarticlelable.setVcLableid(it.next());
+				tarticlelable.setVcArticleid(tarticle.getVcArticleid());
+				tarticleLableList.add(tarticlelable);
+			}
+		}
+		
+		
+		//添加文章和标签
+		articleService.AddArticleLable(tarticle , tarticleLableList);
+		
+		
 		//返回信息，提示成功
 		result.setStatus(1);
 		result.setSuccess(true);

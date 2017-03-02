@@ -31,10 +31,6 @@
 	<classpathentry kind="lib" path="src/main/webapp/lib/json-lib-2.4-jdk15.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/lib/json.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/lib/ueditor-1.1.2.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.7.0_21">
-		<attributes>
-			<attribute name="owner.project.facets" value="java"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
