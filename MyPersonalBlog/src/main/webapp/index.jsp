@@ -21,6 +21,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    This is my JSP page. <br>
+  	<%
+  		request.getRequestDispatcher("/jsp/login.jsp").forward(request,response);
+  	%>
   </body>
 </html>
