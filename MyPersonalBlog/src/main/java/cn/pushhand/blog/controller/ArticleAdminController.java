@@ -18,14 +18,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.pushhand.blog.model.Tarticle;
+import cn.pushhand.blog.model.TarticleLableComment;
 import cn.pushhand.blog.model.Tarticlelable;
 import cn.pushhand.blog.model.Tarticletype;
 import cn.pushhand.blog.model.Tlable;
 import cn.pushhand.blog.model.Tuser;
 import cn.pushhand.blog.service.ArticleLable;
+import cn.pushhand.blog.service.ArticleLableCommentService;
 import cn.pushhand.blog.service.ArticleService;
 import cn.pushhand.blog.service.ArticleTypeService;
 import cn.pushhand.blog.service.LableService;
+import cn.pushhand.blog.util.PageUtil;
 import cn.pushhand.blog.util.Result;
 import net.sf.json.JSONObject;
 
@@ -44,7 +47,7 @@ public class ArticleAdminController {
 	@Autowired
 	private LableService lableService;
 	@Autowired
-	private ArticleLable articleLable;
+	private ArticleLableCommentService articleLableService;
 	
 	
 	/*
@@ -136,5 +139,76 @@ public class ArticleAdminController {
 		return result;
 		
 	}
+	
+	
+	
+	/*
+	 * 博主获取文章列表
+	 * 包括标签
+	 */
+	@RequestMapping("/admin/findAllArticle")
+	public String findAllArticleByUser(HttpServletRequest request ,
+			HttpServletResponse response){
+		
+		//首先获取session中的user
+		HttpSession session = request.getSession();
+		Tuser user = (Tuser) session.getAttribute("currentUser");
+		if(user == null){
+			return "login";
+		}
+		String userId = user.getVcUserid();
+		
+		//根据用户名，查询所有的文章
+		List<TarticleLableComment> articleList = articleLableService.findAllArticleByUser(userId);
+		request.setAttribute("articleList", articleList);
+		//返回到页面
+		return "blog";
+		
+	}
+	
+	
+	/*
+	 *  分页获取文章列表
+	 */
+	@SuppressWarnings("unused")
+	@RequestMapping("/admin/findAllArticlePage")
+	public String findAllArticleByPage(HttpServletRequest request ,
+			HttpServletResponse response){
+		
+		//首先获取session中的user
+		HttpSession session = request.getSession();
+		Tuser user = (Tuser) session.getAttribute("currentUser");
+		if(user == null){
+			return "login";
+		}
+		String userId = user.getVcUserid();
+		
+		List<TarticleLableComment> articleList = new ArrayList<TarticleLableComment>();
+		//分页处理
+		PageUtil page = null;
+		//获取传入的页码
+		String pageNow = request.getParameter("pageNow");
+		//获取文章总数
+		int totalCount = articleLableService.fundArticleCountByUser(userId);
+		//判断当前页是第几页
+		if(pageNow == null){
+			//第一次打开，未传入当前页
+			page = new PageUtil(totalCount, 1);
+		}else{
+			//传入了pageNow
+			page = new PageUtil(totalCount , Integer.parseInt(pageNow));
+		}
+		//分页查询文章
+		articleList = 
+				articleLableService.findAllArticleByPage(userId, page.getStartPos(), page.getPageSize());	
+		
+		request.setAttribute("articleList", articleList);
+		request.setAttribute("page", page);
+		//返回到页面
+		return "blog";
+		
+	}
+	
+	
 
 }
