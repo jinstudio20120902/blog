@@ -3,6 +3,7 @@
 <mapper namespace="cn.pushhand.blog.mapper.TcommentMapper" >
   <resultMap id="BaseResultMap" type="cn.pushhand.blog.model.Tcomment" >
     <id column="vc_commentid" property="vcCommentid" jdbcType="VARCHAR" />
+    <result column="vc_articleid" property="vcArticleid" jdbcType="VARCHAR" />
     <result column="vc_commentcontent" property="vcCommentcontent" jdbcType="VARCHAR" />
     <result column="dt_comenttime" property="dtComenttime" jdbcType="TIMESTAMP" />
     <result column="vc_visitor" property="vcVisitor" jdbcType="VARCHAR" />
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    vc_commentid, vc_commentcontent, dt_comenttime, vc_visitor
+    vc_commentid, vc_articleid, vc_commentcontent, dt_comenttime, vc_visitor
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.pushhand.blog.model.TcommentExample" >
     select
@@ -99,16 +100,19 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.pushhand.blog.model.Tcomment" >
-    insert into tcomment (vc_commentid, vc_commentcontent, dt_comenttime, 
-      vc_visitor)
-    values (#{vcCommentid,jdbcType=VARCHAR}, #{vcCommentcontent,jdbcType=VARCHAR}, #{dtComenttime,jdbcType=TIMESTAMP}, 
-      #{vcVisitor,jdbcType=VARCHAR})
+    insert into tcomment (vc_commentid, vc_articleid, vc_commentcontent, 
+      dt_comenttime, vc_visitor)
+    values (#{vcCommentid,jdbcType=VARCHAR}, #{vcArticleid,jdbcType=VARCHAR}, #{vcCommentcontent,jdbcType=VARCHAR}, 
+      #{dtComenttime,jdbcType=TIMESTAMP}, #{vcVisitor,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.pushhand.blog.model.Tcomment" >
     insert into tcomment
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="vcCommentid != null" >
         vc_commentid,
+      </if>
+      <if test="vcArticleid != null" >
+        vc_articleid,
       </if>
       <if test="vcCommentcontent != null" >
         vc_commentcontent,
@@ -123,6 +127,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="vcCommentid != null" >
         #{vcCommentid,jdbcType=VARCHAR},
+      </if>
+      <if test="vcArticleid != null" >
+        #{vcArticleid,jdbcType=VARCHAR},
       </if>
       <if test="vcCommentcontent != null" >
         #{vcCommentcontent,jdbcType=VARCHAR},
@@ -147,6 +154,9 @@
       <if test="record.vcCommentid != null" >
         vc_commentid = #{record.vcCommentid,jdbcType=VARCHAR},
       </if>
+      <if test="record.vcArticleid != null" >
+        vc_articleid = #{record.vcArticleid,jdbcType=VARCHAR},
+      </if>
       <if test="record.vcCommentcontent != null" >
         vc_commentcontent = #{record.vcCommentcontent,jdbcType=VARCHAR},
       </if>
@@ -164,6 +174,7 @@
   <update id="updateByExample" parameterType="map" >
     update tcomment
     set vc_commentid = #{record.vcCommentid,jdbcType=VARCHAR},
+      vc_articleid = #{record.vcArticleid,jdbcType=VARCHAR},
       vc_commentcontent = #{record.vcCommentcontent,jdbcType=VARCHAR},
       dt_comenttime = #{record.dtComenttime,jdbcType=TIMESTAMP},
       vc_visitor = #{record.vcVisitor,jdbcType=VARCHAR}
@@ -174,6 +185,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.pushhand.blog.model.Tcomment" >
     update tcomment
     <set >
+      <if test="vcArticleid != null" >
+        vc_articleid = #{vcArticleid,jdbcType=VARCHAR},
+      </if>
       <if test="vcCommentcontent != null" >
         vc_commentcontent = #{vcCommentcontent,jdbcType=VARCHAR},
       </if>
@@ -188,7 +202,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.pushhand.blog.model.Tcomment" >
     update tcomment
-    set vc_commentcontent = #{vcCommentcontent,jdbcType=VARCHAR},
+    set vc_articleid = #{vcArticleid,jdbcType=VARCHAR},
+      vc_commentcontent = #{vcCommentcontent,jdbcType=VARCHAR},
       dt_comenttime = #{dtComenttime,jdbcType=TIMESTAMP},
       vc_visitor = #{vcVisitor,jdbcType=VARCHAR}
     where vc_commentid = #{vcCommentid,jdbcType=VARCHAR}

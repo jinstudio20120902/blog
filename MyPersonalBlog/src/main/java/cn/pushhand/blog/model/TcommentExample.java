@@ -175,6 +175,76 @@ public class TcommentExample {
             return (Criteria) this;
         }
 
+        public Criteria andVcArticleidIsNull() {
+            addCriterion("vc_articleid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVcArticleidIsNotNull() {
+            addCriterion("vc_articleid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVcArticleidEqualTo(String value) {
+            addCriterion("vc_articleid =", value, "vcArticleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andVcArticleidNotEqualTo(String value) {
+            addCriterion("vc_articleid <>", value, "vcArticleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andVcArticleidGreaterThan(String value) {
+            addCriterion("vc_articleid >", value, "vcArticleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andVcArticleidGreaterThanOrEqualTo(String value) {
+            addCriterion("vc_articleid >=", value, "vcArticleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andVcArticleidLessThan(String value) {
+            addCriterion("vc_articleid <", value, "vcArticleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andVcArticleidLessThanOrEqualTo(String value) {
+            addCriterion("vc_articleid <=", value, "vcArticleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andVcArticleidLike(String value) {
+            addCriterion("vc_articleid like", value, "vcArticleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andVcArticleidNotLike(String value) {
+            addCriterion("vc_articleid not like", value, "vcArticleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andVcArticleidIn(List<String> values) {
+            addCriterion("vc_articleid in", values, "vcArticleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andVcArticleidNotIn(List<String> values) {
+            addCriterion("vc_articleid not in", values, "vcArticleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andVcArticleidBetween(String value1, String value2) {
+            addCriterion("vc_articleid between", value1, value2, "vcArticleid");
+            return (Criteria) this;
+        }
+
+        public Criteria andVcArticleidNotBetween(String value1, String value2) {
+            addCriterion("vc_articleid not between", value1, value2, "vcArticleid");
+            return (Criteria) this;
+        }
+
         public Criteria andVcCommentcontentIsNull() {
             addCriterion("vc_commentcontent is null");
             return (Criteria) this;

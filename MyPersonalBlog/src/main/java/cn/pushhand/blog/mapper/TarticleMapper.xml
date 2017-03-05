@@ -5,7 +5,7 @@
     <id column="vc_articleid" property="vcArticleid" jdbcType="VARCHAR" />
     <result column="vc_articletitle" property="vcArticletitle" jdbcType="VARCHAR" />
     <result column="vc_articlecontent" property="vcArticlecontent" jdbcType="VARCHAR" />
-    <result column="c_articletype" property="cArticletype" jdbcType="CHAR" />
+    <result column="c_articletype" property="cArticletype" jdbcType="VARCHAR" />
     <result column="vc_userid" property="vcUserid" jdbcType="VARCHAR" />
     <result column="dt_createtime" property="dtCreatetime" jdbcType="TIMESTAMP" />
     <result column="dt_publishtime" property="dtPublishtime" jdbcType="TIMESTAMP" />
@@ -107,7 +107,7 @@
       c_articletype, vc_userid, dt_createtime, 
       dt_publishtime)
     values (#{vcArticleid,jdbcType=VARCHAR}, #{vcArticletitle,jdbcType=VARCHAR}, #{vcArticlecontent,jdbcType=VARCHAR}, 
-      #{cArticletype,jdbcType=CHAR}, #{vcUserid,jdbcType=VARCHAR}, #{dtCreatetime,jdbcType=TIMESTAMP}, 
+      #{cArticletype,jdbcType=VARCHAR}, #{vcUserid,jdbcType=VARCHAR}, #{dtCreatetime,jdbcType=TIMESTAMP}, 
       #{dtPublishtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cn.pushhand.blog.model.Tarticle" >
@@ -146,7 +146,7 @@
         #{vcArticlecontent,jdbcType=VARCHAR},
       </if>
       <if test="cArticletype != null" >
-        #{cArticletype,jdbcType=CHAR},
+        #{cArticletype,jdbcType=VARCHAR},
       </if>
       <if test="vcUserid != null" >
         #{vcUserid,jdbcType=VARCHAR},
@@ -178,7 +178,7 @@
         vc_articlecontent = #{record.vcArticlecontent,jdbcType=VARCHAR},
       </if>
       <if test="record.cArticletype != null" >
-        c_articletype = #{record.cArticletype,jdbcType=CHAR},
+        c_articletype = #{record.cArticletype,jdbcType=VARCHAR},
       </if>
       <if test="record.vcUserid != null" >
         vc_userid = #{record.vcUserid,jdbcType=VARCHAR},
@@ -199,7 +199,7 @@
     set vc_articleid = #{record.vcArticleid,jdbcType=VARCHAR},
       vc_articletitle = #{record.vcArticletitle,jdbcType=VARCHAR},
       vc_articlecontent = #{record.vcArticlecontent,jdbcType=VARCHAR},
-      c_articletype = #{record.cArticletype,jdbcType=CHAR},
+      c_articletype = #{record.cArticletype,jdbcType=VARCHAR},
       vc_userid = #{record.vcUserid,jdbcType=VARCHAR},
       dt_createtime = #{record.dtCreatetime,jdbcType=TIMESTAMP},
       dt_publishtime = #{record.dtPublishtime,jdbcType=TIMESTAMP}
@@ -217,7 +217,7 @@
         vc_articlecontent = #{vcArticlecontent,jdbcType=VARCHAR},
       </if>
       <if test="cArticletype != null" >
-        c_articletype = #{cArticletype,jdbcType=CHAR},
+        c_articletype = #{cArticletype,jdbcType=VARCHAR},
       </if>
       <if test="vcUserid != null" >
         vc_userid = #{vcUserid,jdbcType=VARCHAR},
@@ -235,7 +235,7 @@
     update tarticle
     set vc_articletitle = #{vcArticletitle,jdbcType=VARCHAR},
       vc_articlecontent = #{vcArticlecontent,jdbcType=VARCHAR},
-      c_articletype = #{cArticletype,jdbcType=CHAR},
+      c_articletype = #{cArticletype,jdbcType=VARCHAR},
       vc_userid = #{vcUserid,jdbcType=VARCHAR},
       dt_createtime = #{dtCreatetime,jdbcType=TIMESTAMP},
       dt_publishtime = #{dtPublishtime,jdbcType=TIMESTAMP}
