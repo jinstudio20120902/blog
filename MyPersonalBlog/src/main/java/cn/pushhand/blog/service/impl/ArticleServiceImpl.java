@@ -6,9 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.pushhand.blog.mapper.TarticleLableCommentMapper;
 import cn.pushhand.blog.mapper.TarticleMapper;
 import cn.pushhand.blog.mapper.TarticlelableMapper;
 import cn.pushhand.blog.model.Tarticle;
+import cn.pushhand.blog.model.TarticleLableComment;
 import cn.pushhand.blog.model.Tarticlelable;
 import cn.pushhand.blog.service.ArticleService;
 /**
@@ -22,6 +24,8 @@ public class ArticleServiceImpl implements ArticleService {
 	private TarticleMapper articleMapper;
 	@Autowired
 	TarticlelableMapper articleLableMapper;
+	@Autowired
+	TarticleLableCommentMapper articleLableCommentMapper;
 
 	@Override
 	public int AddArticle(Tarticle tarticle) {
@@ -55,6 +59,23 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		
 		return 1;
+	}
+
+
+	@Override
+	public TarticleLableComment selectArticltById(String articleId) {
+		
+		TarticleLableComment alc = new TarticleLableComment();
+		
+		//查询文章内容
+		alc.setaTarticle(articleMapper.selectByPrimaryKey(articleId));
+		
+		//查询标签
+		alc.setArticleLables(articleLableCommentMapper.findLableByArticle(articleId));
+		
+		//查询评论
+		
+		return alc;
 	}
 	
 

@@ -68,6 +68,7 @@
   	from tarticle a , tarticletype d
   	where a.vc_userid = #{userId}
   	and a.c_articletype = d.vc_typeid
+  	order by a.dt_publishtime desc
   	limit #{startPos} , #{pageSize}
   </select>
   
@@ -100,6 +101,8 @@
     <result column="vc_lablename" property="vcLablename" jdbcType="VARCHAR" />
   </resultMap>
   
+  
+  <!-- fundCommentByArticle -->
   
   
   

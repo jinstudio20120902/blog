@@ -21,7 +21,7 @@ public interface TarticleLableCommentMapper {
 	
 	
 	/**
-	 * 查询当前文章所有文章，以及类型
+	 * 查询当前用户所有文章，以及类型
 	 * 参数，用户id，起始位置，每页数量
 	 */
 	List<TarticleLableComment> findAllArticleByPage(@Param(value="userId") String userId ,  

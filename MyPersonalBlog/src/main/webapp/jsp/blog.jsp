@@ -33,15 +33,17 @@
 					<div class="ibox">
 	                    <div class="ibox-content">
 							
-	                        <a href="article.html" class="btn-link">
+	                        <a href="${pageContext.request.contextPath}/admin/findArticltById.action?articleId=${articleLableComment.aTarticle.vcArticleid}" class="btn-link" target="_blank">
 	                        	<!-- 标题 -->
-	                             <h2>
-	                             	<span class="label label-primary">${articleLableComment.articletype.vcTypename}</span>
+								
+								 <h2>
+									<span class="label label-primary">${articleLableComment.articletype.vcTypename}</span>
 	                             	${articleLableComment.aTarticle.vcArticletitle}
 	                             </h2>
 	                        </a>
 	                        <div class="small m-b-xs">
 	                            <!-- <strong>高 晨</strong> --> 
+								
 	                            <!-- 发表时间 -->
 	                            <span class="text-muted">
 	                            	<i class="fa fa-clock-o"></i> 
@@ -166,14 +168,14 @@
 							<c:when test="${page.pageNow + 1 < page.totalPageCount}">
 								<button class="btn btn-white" type="button">
 									<i class="fa fa-chevron-right">
-										<a href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=${page.pageNow + 1}">上一页</a>
+										<a href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=${page.pageNow + 1}">下一页</a>
 									</i>
 								</button>	
 							</c:when>
 							<c:when test="${page.pageNow + 1 >= page.totalPageCount}">
 								<button class="btn btn-white" type="button">
 									<i class="fa fa-chevron-right">
-										<a href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=${page.totalPageCount}">上一页</a>
+										<a href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=${page.totalPageCount}">下一页</a>
 									</i>
 								</button>	
 							</c:when>
