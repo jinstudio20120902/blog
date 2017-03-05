@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.pushhand.blog.mapper.TarticleLableCommentMapper" >
+
+
+  <resultMap id="BaseResultMap" type="cn.pushhand.blog.model.Tarticle" >
+    <id column="vc_articleid" property="aTarticle.vcArticleid" jdbcType="VARCHAR" />
+    <result column="vc_articletitle" property="aTarticle.vcArticletitle" jdbcType="VARCHAR" />
+    <result column="vc_articlecontent" property="aTarticle.vcArticlecontent" jdbcType="VARCHAR" />
+    <result column="c_articletype" property="aTarticle.cArticletype" jdbcType="CHAR" />
+    <result column="vc_userid" property="aTarticle.vcUserid" jdbcType="VARCHAR" />
+    <result column="dt_createtime" property="aTarticle.dtCreatetime" jdbcType="TIMESTAMP" />
+    <result column="dt_publishtime" property="aTarticle.dtPublishtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="AllCollumnResultMap" type="cn.pushhand.blog.model.TarticleLableComment" extends="BaseResultMap">
+  
+  	<collection property="articleLables" ofType="cn.pushhand.blog.model.Tlable">
+  		<id property="vcLableid" column="vc_lableid" jdbcType="VARCHAR"></id>
+  		<result property="vcLablename" column="vc_lablename" jdbcType="VARCHAR"></result>
+  	</collection>
+  	
+  </resultMap>
+  
+  <sql id="Article_Base_Column" >
+    a.vc_articleid, a.vc_articletitle, a.vc_articlecontent, a.c_articletype, a.vc_userid, a.dt_createtime, 
+    a.dt_publishtime
+  </sql>
+  
+  <sql id="ArticleType_Base_Columnt" >
+    vc_typeid , vc_typename
+  </sql>
+  
+  <sql id="ArticleLable_Base_Column" >
+    vc_articleid, vc_lableid
+  </sql>
+  
+  <sql id="Lable_Base_Columnt" >
+    c.vc_lableid, c.vc_lablename
+  </sql>
+  
+  <!-- 不分页查询 -->
+  <select id="findAllArticleByUser" parameterType="java.lang.String" resultMap="AllCollumnResultMap">
+  	select
+  	<include refid="Article_Base_Column" />
+  	,
+  	<include refid="Lable_Base_Columnt" />
+  	
+  	from tarticle a , tarticlelable b , tlable c
+  	where a.vc_userid = #{userId,jdbcType=VARCHAR}
+  	and a.vc_articleid = b.vc_articleid
+  	and b.vc_lableid = c.vc_lableid
+  
+  </select>
+  
+  <!-- 查询当前用户的文章数量  -->
+  <select id="fundArticleCountByUser" parameterType="java.lang.String" resultType="int">
+  		select count(*) from tarticle where vc_userid = #{userId,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 分页查询 -->
+  <select id="findAllArticleByPage" resultMap="ArticlePageResultMap">
+  	select
+  	<include refid="Article_Base_Column" />
+  	,
+  	<include refid="ArticleType_Base_Columnt" />
+	
+  	from tarticle a , tarticletype d
+  	where a.vc_userid = #{userId}
+  	and a.c_articletype = d.vc_typeid
+  	limit #{startPos} , #{pageSize}
+  </select>
+  
+  <resultMap type="cn.pushhand.blog.model.TarticleLableComment" id="ArticlePageResultMap">
+  	<id column="vc_articleid" property="aTarticle.vcArticleid" jdbcType="VARCHAR" />
+  	<!-- tarticle  -->
+    <result column="vc_articletitle" property="aTarticle.vcArticletitle" jdbcType="VARCHAR" />
+    <result column="vc_articlecontent" property="aTarticle.vcArticlecontent" jdbcType="VARCHAR" />
+    <result column="c_articletype" property="aTarticle.cArticletype" jdbcType="CHAR" />
+    <result column="vc_userid" property="aTarticle.vcUserid" jdbcType="VARCHAR" />
+    <result column="dt_createtime" property="aTarticle.dtCreatetime" jdbcType="TIMESTAMP" />
+    <result column="dt_publishtime" property="aTarticle.dtPublishtime" jdbcType="TIMESTAMP" />
+    <!-- articleType  vc_typeid , vc_typename-->
+    <result column="vc_typeid" property="articletype.vcTypeid" jdbcType="VARCHAR" />
+    <result column="vc_typename" property="articletype.vcTypename" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  <!-- findLableByArticle -->
+  <select id="findLableByArticle" parameterType="java.lang.String" resultMap="ArticleLableResultMap">
+  	select 
+  	<include refid="Lable_Base_Columnt" />
+  	from tarticle a , tarticlelable b , tlable c
+  	where a.vc_articleid = #{articleId,jdbcType=VARCHAR}
+  	and a.vc_articleid = b.vc_articleid
+  	and b.vc_lableid = c.vc_lableid
+  </select>
+  <resultMap id="ArticleLableResultMap" type="cn.pushhand.blog.model.Tlable">
+  	<id column="vc_lableid" property="vcLableid" jdbcType="VARCHAR" />
+    <result column="vc_lablename" property="vcLablename" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  
+  
+  
+  
+</mapper>

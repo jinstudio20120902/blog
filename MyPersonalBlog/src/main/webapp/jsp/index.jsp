@@ -89,7 +89,7 @@
                                 <a href="#">我的博客 <span class="fa arrow"></span></a>
                                 
 								<ul class="nav nav-third-level">
-                                    <li><a class="J_menuItem" href="blog.html">文章列表</a>
+                                    <li><a class="J_menuItem" href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=1&">文章列表</a>
                                     </li>
                                    
                                 </ul>
