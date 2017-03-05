@@ -88,8 +88,10 @@ public class ArticleAdminController {
 		tarticle.setVcArticletitle(request.getParameter("vcArticletitle").toString());
 		//类型
 		tarticle.setcArticletype(request.getParameter("cArticletype").toString());
-		//内容
+		//内容(把内容中的图片解析出来，然后用Base64转换成图片保存到服务器上)
+		String vcArticleContent = request.getParameter("vcArticlecontent").toString();
 		tarticle.setVcArticlecontent(request.getParameter("vcArticlecontent").toString());
+		
 		//获取session中的用户名
 		HttpSession session = request.getSession();
 		Tuser user = (Tuser) session.getAttribute("currentUser");

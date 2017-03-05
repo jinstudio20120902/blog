@@ -15,12 +15,19 @@
 <title>写博客</title>
 
 <link rel="shortcut icon" href="favicon.ico">
+<script src="<%=baseViewPath %>js/jquery.min.js"></script>
 <link href="<%=baseViewPath %>css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
+<script src="<%=baseViewPath %>js/bootstrap.min.js?v=3.3.5"></script>
 <link href="<%=baseViewPath %>css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+<script src="<%=baseViewPath %>js/plugins/summernote/summernote.min.js"></script>
+<script src="<%=baseViewPath %>js/plugins/summernote/summernote-zh-CN.js"></script>
+<link href="<%=baseViewPath %>css/style.min.css?v=4.0.0" rel="stylesheet">
 <link href="<%=baseViewPath %>css/animate.min.css" rel="stylesheet">
 <link href="<%=baseViewPath %>css/plugins/summernote/summernote.css" rel="stylesheet">
 <link href="<%=baseViewPath %>css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
-<link href="<%=baseViewPath %>css/style.min.css?v=4.0.0" rel="stylesheet">
+
+<script src="<%=baseViewPath %>js/content.min.js?v=1.0.0"></script>
+
 <base target="_blank">
 
 </head>
@@ -134,21 +141,15 @@
 		
 
 	</div>
-	<script src="<%=baseViewPath %>js/jquery.min.js"></script>
-	<script src="<%=baseViewPath %>js/bootstrap.min.js?v=3.3.5"></script>
-	<script src="<%=baseViewPath %>js/content.min.js?v=1.0.0"></script>
-	<script src="<%=baseViewPath %>js/plugins/summernote/summernote.min.js"></script>
-	<script src="<%=baseViewPath %>js/plugins/summernote/summernote-zh-CN.js"></script>
 	<script>
 		$(document).ready(function() {
 			$(".summernote").summernote({
 				lang : "zh-CN",
 				height: "300px", 
-				callbacks:{
-					onImageUpload:function(files){
-						img = sendFile(files[0]);
-					}
-				}
+				onImageUpload: function(files, editor, $editable) {  
+			    sendFile(files[0],editor,$editable);  
+			    }  
+				
 			})
 		});
 		var edit = function() {
@@ -163,10 +164,7 @@
 			$(".click2edit").destroy()
 		};
 	</script>
-	<!--
-	<script type="text/javascript"
-		src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
-		-->
+	
 
 
 	<script language="javascript">
@@ -203,19 +201,19 @@
 		}
 		
 	
-		function sendFile(file) {
+		function sendFile(file, editor, $editable) {
 			data = new FormData();
 			data.append("file", file);
 			
 			$.ajax({
 				data : data,
 				type : "POST",
-				url : "/admin/upload.action",
+				url : "${pageContext.request.contextPath}/admin/upload.action",
 				cache : false,
 				contentType : false,
 				processData : false,
 				success : function(url) {
-					$(".summernote").summernote('insertImage', url.filePath, 'image name'); // the insertImage API  
+					editor.insertImage($editable, url);
 				}
 			});
 		}
@@ -234,6 +232,16 @@
 				if (lable !== null || lable !== undefined || lable !== '') {
 					vcLableid = vcLableid  + $(this).data("lableid") + ",";
 				}	
+			});
+			
+			$(".summernote").summernote({
+				lang : "zh-CN",
+				height: "300px", 
+				callbacks:{
+					onImageUpload:function(files){
+						img = sendFile(files[0]);
+					}
+				}
 			});
 			console.log(vcLableid);
 			$.ajax({ 
