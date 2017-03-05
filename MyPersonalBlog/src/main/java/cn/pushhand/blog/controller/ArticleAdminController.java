@@ -23,14 +23,12 @@ import cn.pushhand.blog.model.Tarticlelable;
 import cn.pushhand.blog.model.Tarticletype;
 import cn.pushhand.blog.model.Tlable;
 import cn.pushhand.blog.model.Tuser;
-import cn.pushhand.blog.service.ArticleLable;
 import cn.pushhand.blog.service.ArticleLableCommentService;
 import cn.pushhand.blog.service.ArticleService;
 import cn.pushhand.blog.service.ArticleTypeService;
 import cn.pushhand.blog.service.LableService;
 import cn.pushhand.blog.util.PageUtil;
 import cn.pushhand.blog.util.Result;
-import net.sf.json.JSONObject;
 
 /**
  * 文章controller，基于博主的
@@ -88,10 +86,8 @@ public class ArticleAdminController {
 		tarticle.setVcArticletitle(request.getParameter("vcArticletitle").toString());
 		//类型
 		tarticle.setcArticletype(request.getParameter("cArticletype").toString());
-		//内容(把内容中的图片解析出来，然后用Base64转换成图片保存到服务器上)
-		String vcArticleContent = request.getParameter("vcArticlecontent").toString();
+		//内容
 		tarticle.setVcArticlecontent(request.getParameter("vcArticlecontent").toString());
-		
 		//获取session中的用户名
 		HttpSession session = request.getSession();
 		Tuser user = (Tuser) session.getAttribute("currentUser");
@@ -208,6 +204,24 @@ public class ArticleAdminController {
 		request.setAttribute("page", page);
 		//返回到页面
 		return "blog";
+		
+	}
+	
+	
+	/*
+	 * 查看单篇文章内容标签以及评论
+	 */
+	@RequestMapping("/admin/findArticltById")
+	public String findArticltById(HttpServletRequest request ,
+			HttpServletResponse response){
+		//获取文章id
+		String articleId = request.getParameter("articleId");
+		//判断是否为空，为空则抛出异常 
+		TarticleLableComment alc = articleService.selectArticltById(articleId);
+		
+		request.setAttribute("article", alc);
+		
+		return "article";
 		
 	}
 	
