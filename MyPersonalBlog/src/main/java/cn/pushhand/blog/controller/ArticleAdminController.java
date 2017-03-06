@@ -105,6 +105,7 @@ public class ArticleAdminController {
 		//时间
 		tarticle.setDtCreatetime(new Date());
 		tarticle.setDtPublishtime(new Date());
+		tarticle.setnClicknum(0);
 		
 		//解析传入的lable id
 		//拆分,以逗号拆分

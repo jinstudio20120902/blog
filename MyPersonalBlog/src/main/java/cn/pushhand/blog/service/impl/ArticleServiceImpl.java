@@ -9,9 +9,12 @@ import org.springframework.stereotype.Service;
 import cn.pushhand.blog.mapper.TarticleLableCommentMapper;
 import cn.pushhand.blog.mapper.TarticleMapper;
 import cn.pushhand.blog.mapper.TarticlelableMapper;
+import cn.pushhand.blog.mapper.TcommentMapper;
 import cn.pushhand.blog.model.Tarticle;
 import cn.pushhand.blog.model.TarticleLableComment;
 import cn.pushhand.blog.model.Tarticlelable;
+import cn.pushhand.blog.model.TcommentExample;
+import cn.pushhand.blog.model.TcommentExample.Criteria;
 import cn.pushhand.blog.service.ArticleService;
 /**
  * 文章service实现类
@@ -26,6 +29,8 @@ public class ArticleServiceImpl implements ArticleService {
 	TarticlelableMapper articleLableMapper;
 	@Autowired
 	TarticleLableCommentMapper articleLableCommentMapper;
+	@Autowired
+	private TcommentMapper commentMapper;
 
 	@Override
 	public int AddArticle(Tarticle tarticle) {
@@ -74,6 +79,10 @@ public class ArticleServiceImpl implements ArticleService {
 		alc.setArticleLables(articleLableCommentMapper.findLableByArticle(articleId));
 		
 		//查询评论
+		TcommentExample example = new TcommentExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andVcArticleidEqualTo(articleId);
+		alc.setArticleComments(commentMapper.selectByExample(example));
 		
 		return alc;
 	}

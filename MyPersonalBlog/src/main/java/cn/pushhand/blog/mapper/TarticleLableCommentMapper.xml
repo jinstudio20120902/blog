@@ -11,6 +11,7 @@
     <result column="vc_userid" property="aTarticle.vcUserid" jdbcType="VARCHAR" />
     <result column="dt_createtime" property="aTarticle.dtCreatetime" jdbcType="TIMESTAMP" />
     <result column="dt_publishtime" property="aTarticle.dtPublishtime" jdbcType="TIMESTAMP" />
+    <result column="n_clicknum" property="aTarticle.nClicknum" jdbcType="INTEGER" />
   </resultMap>
   
   <resultMap id="AllCollumnResultMap" type="cn.pushhand.blog.model.TarticleLableComment" extends="BaseResultMap">
@@ -24,7 +25,7 @@
   
   <sql id="Article_Base_Column" >
     a.vc_articleid, a.vc_articletitle, a.vc_articlecontent, a.c_articletype, a.vc_userid, a.dt_createtime, 
-    a.dt_publishtime
+    a.dt_publishtime, n_clicknum
   </sql>
   
   <sql id="ArticleType_Base_Columnt" >
@@ -81,6 +82,7 @@
     <result column="vc_userid" property="aTarticle.vcUserid" jdbcType="VARCHAR" />
     <result column="dt_createtime" property="aTarticle.dtCreatetime" jdbcType="TIMESTAMP" />
     <result column="dt_publishtime" property="aTarticle.dtPublishtime" jdbcType="TIMESTAMP" />
+    <result column="n_clicknum" property="aTarticle.nClicknum" jdbcType="INTEGER" />
     <!-- articleType  vc_typeid , vc_typename-->
     <result column="vc_typeid" property="articletype.vcTypeid" jdbcType="VARCHAR" />
     <result column="vc_typename" property="articletype.vcTypename" jdbcType="VARCHAR" />

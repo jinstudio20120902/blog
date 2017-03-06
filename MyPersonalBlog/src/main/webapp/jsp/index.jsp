@@ -225,7 +225,7 @@
                 <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="index_v2.html?v=4.0" frameborder="0" data-id="index_v2.html" seamless></iframe>
             </div>
             <div class="footer">
-                <div class="pull-right">&copy; 2014-2015 <a href="http://www.zi-han.net/" target="_blank">zihan's blog</a>
+                <div class="pull-right">&copy; 2016-2017 <a href="#" target="_blank">Errol's blog</a>
                 </div>
             </div>
         </div>

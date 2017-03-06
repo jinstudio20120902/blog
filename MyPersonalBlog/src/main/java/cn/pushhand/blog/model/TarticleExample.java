@@ -574,6 +574,66 @@ public class TarticleExample {
             addCriterion("dt_publishtime not between", value1, value2, "dtPublishtime");
             return (Criteria) this;
         }
+
+        public Criteria andNClicknumIsNull() {
+            addCriterion("n_clicknum is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNClicknumIsNotNull() {
+            addCriterion("n_clicknum is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNClicknumEqualTo(Integer value) {
+            addCriterion("n_clicknum =", value, "nClicknum");
+            return (Criteria) this;
+        }
+
+        public Criteria andNClicknumNotEqualTo(Integer value) {
+            addCriterion("n_clicknum <>", value, "nClicknum");
+            return (Criteria) this;
+        }
+
+        public Criteria andNClicknumGreaterThan(Integer value) {
+            addCriterion("n_clicknum >", value, "nClicknum");
+            return (Criteria) this;
+        }
+
+        public Criteria andNClicknumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("n_clicknum >=", value, "nClicknum");
+            return (Criteria) this;
+        }
+
+        public Criteria andNClicknumLessThan(Integer value) {
+            addCriterion("n_clicknum <", value, "nClicknum");
+            return (Criteria) this;
+        }
+
+        public Criteria andNClicknumLessThanOrEqualTo(Integer value) {
+            addCriterion("n_clicknum <=", value, "nClicknum");
+            return (Criteria) this;
+        }
+
+        public Criteria andNClicknumIn(List<Integer> values) {
+            addCriterion("n_clicknum in", values, "nClicknum");
+            return (Criteria) this;
+        }
+
+        public Criteria andNClicknumNotIn(List<Integer> values) {
+            addCriterion("n_clicknum not in", values, "nClicknum");
+            return (Criteria) this;
+        }
+
+        public Criteria andNClicknumBetween(Integer value1, Integer value2) {
+            addCriterion("n_clicknum between", value1, value2, "nClicknum");
+            return (Criteria) this;
+        }
+
+        public Criteria andNClicknumNotBetween(Integer value1, Integer value2) {
+            addCriterion("n_clicknum not between", value1, value2, "nClicknum");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

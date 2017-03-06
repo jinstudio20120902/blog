@@ -18,7 +18,8 @@ vc_articlecontent varchar(20000),/*文章内容*/
 c_articletype varchar(36) not null,/*文章类别*/
 vc_userid varchar(36) not null,/*用户id*/
 dt_createtime timestamp not null,/*创建时间*/
-dt_publishtime timestamp not null/*发表时间*/
+dt_publishtime timestamp not null,/*发表时间*/
+n_clicknum int not null default 0 /*点击量*/
 );
 
 /*文章类别表*/

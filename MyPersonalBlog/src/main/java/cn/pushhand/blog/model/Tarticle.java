@@ -17,6 +17,8 @@ public class Tarticle {
 
     private Date dtPublishtime;
 
+    private Integer nClicknum;
+
     public String getVcArticleid() {
         return vcArticleid;
     }
@@ -71,5 +73,13 @@ public class Tarticle {
 
     public void setDtPublishtime(Date dtPublishtime) {
         this.dtPublishtime = dtPublishtime;
+    }
+
+    public Integer getnClicknum() {
+        return nClicknum;
+    }
+
+    public void setnClicknum(Integer nClicknum) {
+        this.nClicknum = nClicknum;
     }
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 <!DOCTYPE html>
 <html>
 
@@ -50,6 +51,8 @@
 	                            	<fmt:formatDate value="${articleLableComment.aTarticle.dtPublishtime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 	                            </span>
 	                        </div>
+							<!-- 文章内容摘要 -->
+							<!-- <p></p>  -->
 	                       
 	                        <div class="row">
 	                            <div class="col-md-6">
@@ -65,8 +68,8 @@
 	                            <div class="col-md-6">
 	                                <div class="small text-right">
 	                                    <h5>状态：</h5>
-	                                    <div> <i class="fa fa-comments-o"> </i> 56 评论 </div>
-	                                    <i class="fa fa-eye"> </i> 144 浏览
+	                                    <div> <i class="fa fa-comments-o"> </i> ${fn:length(articleLableComment.articleComments)}评论 </div>
+	                                    <i class="fa fa-eye"> </i> ${articleLableComment.aTarticle.nClicknum }浏览
 	                                </div>
 	                            </div>
 	                        </div>
@@ -112,18 +115,22 @@
 						<!-- 上一页 -->
 						<c:choose>
 							<c:when test="${page.pageNow -1 >0 }">
-								<button class="btn btn-white" type="button">
-									<i class="fa fa-chevron-left">
-										<a href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=${page.pageNow - 1 }">上一页</a>
-									</i>
-								</button>	
+								<a href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=${page.pageNow - 1 }">
+									<button class="btn btn-white" type="button">
+										<i class="fa fa-chevron-left">
+											上一页
+										</i>
+									</button>
+								</a>	
 							</c:when>
 							<c:when test="${page.pageNow -1 <=0 }">
-								<button class="btn btn-white" type="button">
-									<i class="fa fa-chevron-left">
-										<a href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=1">上一页</a>
-									</i>
-								</button>	
+								<a href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=1">
+									<button class="btn btn-white" type="button">
+										<i class="fa fa-chevron-left">
+											上一页
+										</i>
+									</button>	
+								</a>								
 							</c:when>
 						</c:choose>
 						
@@ -137,10 +144,14 @@
 								<c:forEach var="i" begin="1" end="${page.totalPageCount }">
 									<c:choose>
 										<c:when test="${i == page.pageNow }">
-											<button class="btn btn-white active"><a href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=${i }">${i }</a></button>
+											<a href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=${i }">
+												<button class="btn btn-white active">${i }</button>
+											</a>
 										</c:when>
 										<c:otherwise>
-											<button class="btn btn-white"><a href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=${i }">${i }</a></button>
+											<a href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=${i }">
+												<button class="btn btn-white">${i }</button>
+											</a>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>						
@@ -159,25 +170,31 @@
 						<!-- 下一页 -->
 						<c:choose>
 							<c:when test="${page.totalPageCount == 0 }">
-								<button class="btn btn-white" type="button">
-									<i class="fa fa-chevron-right">
-										<a href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=${page.pageNow}">下一页</a>
-									</i>
-								</button>	
+								<a href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=${page.pageNow}">
+									<button class="btn btn-white" type="button">
+										<i class="fa fa-chevron-right">
+											下一页
+										</i>
+									</button>
+								</a>	
 							</c:when>
 							<c:when test="${page.pageNow + 1 < page.totalPageCount}">
-								<button class="btn btn-white" type="button">
-									<i class="fa fa-chevron-right">
-										<a href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=${page.pageNow + 1}">下一页</a>
-									</i>
-								</button>	
+								<a href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=${page.pageNow + 1}">
+									<button class="btn btn-white" type="button">
+										<i class="fa fa-chevron-right">
+											下一页
+										</i>
+									</button>
+								</a>	
 							</c:when>
 							<c:when test="${page.pageNow + 1 >= page.totalPageCount}">
-								<button class="btn btn-white" type="button">
-									<i class="fa fa-chevron-right">
-										<a href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=${page.totalPageCount}">下一页</a>
-									</i>
-								</button>	
+								<a href="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=${page.totalPageCount}">
+									<button class="btn btn-white" type="button">
+										<i class="fa fa-chevron-right">
+											下一页
+										</i>
+									</button>
+								</a>	
 							</c:when>
 						</c:choose>
 						

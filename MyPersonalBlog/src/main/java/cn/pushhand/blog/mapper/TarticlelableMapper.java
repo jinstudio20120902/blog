@@ -10,21 +10,13 @@ public interface TarticlelableMapper {
 
     int deleteByExample(TarticlelableExample example);
 
-    int deleteByPrimaryKey(String vcArticleid);
-
     int insert(Tarticlelable record);
 
     int insertSelective(Tarticlelable record);
 
     List<Tarticlelable> selectByExample(TarticlelableExample example);
 
-    Tarticlelable selectByPrimaryKey(String vcArticleid);
-
     int updateByExampleSelective(@Param("record") Tarticlelable record, @Param("example") TarticlelableExample example);
 
     int updateByExample(@Param("record") Tarticlelable record, @Param("example") TarticlelableExample example);
-
-    int updateByPrimaryKeySelective(Tarticlelable record);
-
-    int updateByPrimaryKey(Tarticlelable record);
 }

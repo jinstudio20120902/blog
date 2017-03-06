@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.pushhand.blog.mapper.TarticlelableMapper" >
   <resultMap id="BaseResultMap" type="cn.pushhand.blog.model.Tarticlelable" >
-    <id column="vc_articleid" property="vcArticleid" jdbcType="VARCHAR" />
+    <result column="vc_articleid" property="vcArticleid" jdbcType="VARCHAR" />
     <result column="vc_lableid" property="vcLableid" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -80,16 +80,6 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from tarticlelable
-    where vc_articleid = #{vcArticleid,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from tarticlelable
-    where vc_articleid = #{vcArticleid,jdbcType=VARCHAR}
-  </delete>
   <delete id="deleteByExample" parameterType="cn.pushhand.blog.model.TarticlelableExample" >
     delete from tarticlelable
     <if test="_parameter != null" >
@@ -146,19 +136,5 @@
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.pushhand.blog.model.Tarticlelable" >
-    update tarticlelable
-    <set >
-      <if test="vcLableid != null" >
-        vc_lableid = #{vcLableid,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where vc_articleid = #{vcArticleid,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.pushhand.blog.model.Tarticlelable" >
-    update tarticlelable
-    set vc_lableid = #{vcLableid,jdbcType=VARCHAR}
-    where vc_articleid = #{vcArticleid,jdbcType=VARCHAR}
   </update>
 </mapper>
