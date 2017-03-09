@@ -40,16 +40,20 @@ public class FileUpLoadController {
 		//创建一个新的文件名称
 		String newFileName = sf.format(new Date());
 		newFileName = newFileName + "." + fileExt;
-		System.out.println();
+		
 		//获取路径
-		String filePath = request.getSession().getServletContext().getRealPath("/") + "jsp\\img\\upload\\" + newFileName;
+		String filePathAndFileName = request.getSession().getServletContext().getRealPath("/") + "jsp/img/upload/" + newFileName;
 		String  netfilePath = "http://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/jsp/img/upload/"+newFileName;
 		
 		//创建文件
-		File localFile = new File(filePath);
+		File localFile = new File(filePathAndFileName);
+		
+		//创建保存图片的路径
+		String filePath = request.getSession().getServletContext().getRealPath("/") + "jsp/img/upload/";
+		File localPath = new File(filePath);
 		//不存在则自动创建
-		if(!localFile.exists()){
-			localFile.mkdir();
+		if(!localPath.exists()){
+			localPath.mkdir();
 		}
 		//存放
 		multipartFile.transferTo(localFile);
