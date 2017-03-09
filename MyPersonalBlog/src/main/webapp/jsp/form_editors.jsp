@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 <!DOCTYPE html>
 <html>
 <%  
@@ -42,13 +43,20 @@
 						<div class="form-group">
 						
 							<div class="input-group">
-								<input type="text" class="form-control" id="articletitle" value="博客标题">
+								<input type="text" class="form-control" id="articletitle" value="${articleLableComment.aTarticle.vcArticletitle }">
 
 								<div class="input-group-btn">
-									<button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">类型 <span class="caret"></span>
-									</button>
+									<!-- 类型 -->
+									<c:if test="${articleLableComment.articletype.vcTypename != null}">
+										<button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button" data-typeid="${articleLableComment.articletype.vcTypeid }">
+											${articleLableComment.articletype.vcTypename } <span class="caret"></span></button>
+									</c:if>
+									<c:if test="${articleLableComment.articletype.vcTypename == null}">
+										<button data-toggle="dropdown" class="btn btn-white dropdown-toggle" type="button">类型 <span class="caret"></span></button>
+									</c:if>
+									
+									<!-- 类型列表 -->
 									<ul class="dropdown-menu pull-right">
-										
 										<c:forEach items="${articletypes }" var="articletype" varStatus="status">
 											<li><a onclick="selectType(this)" data-typeid="${articletype.vcTypeid }">${articletype.vcTypename }</a></li>
 											<!--<span hidden id="articletypeid${status.index }"></span>-->
@@ -92,7 +100,8 @@
 
 
 						<div class="summernote">
-							<h2>博文正文</h2>
+						
+							${articleLableComment.aTarticle.vcArticlecontent }
 
 
 						</div>
@@ -104,6 +113,13 @@
 			
 			<div class="ibox-content">
                     <p id="mylable">
+                    	<c:forEach items="${articleLableComment.articleLables }" var="mylable">
+                    		<a class="btn btn-info btn-rounded" onclick="deleteLable(this)" data-lableid="${mylable.vcLableid }">
+                    			${mylable.vcLablename }
+                    		</a>
+                    	
+                    	</c:forEach>
+                    	
                         <!--
 						<a class="btn btn-info btn-rounded" >java</a>
 						<a class="btn btn-info btn-rounded" >框架</a>
@@ -115,9 +131,12 @@
                     <p id="alllable">
 					
 						<c:forEach items="${lables }" var="lable" varStatus="status">
+							
+							 
 							<button type="button" onclick="selectLable(this)" class="btn btn-outline btn-info" data-lableid="${lable.vcLableid}">
 								${lable.vcLablename}
 							</button>
+							 
 						</c:forEach>
 						<!--
 	                        <button type="button" class="btn btn-outline btn-default">默认</button>
@@ -148,9 +167,10 @@
 				height: "300px", 
 				onImageUpload: function(files, editor, $editable) {  
 			    sendFile(files[0],editor,$editable);  
-			    }  
+			    }
 				
-			})
+			});
+			
 		});
 		var edit = function() {
 			$("#eg").addClass("no-padding");$(".click2edit").summernote({
@@ -187,17 +207,43 @@
 			var lable = $(obj).text(); 
 			var lableid = $(obj).data("lableid"); //lableid
 			
-			$("#mylable").append("<a class=\"btn btn-info btn-rounded\" onclick=\"deleteLable(this)\" data-lableid="+lableid+">"+lable+"</a>");
+			//遍历,去重
+			var flag = "0";
+			 $("#mylable").children().each(function(){
+				var lab = $(this).text();
+				if($.trim(lab) == $.trim(lable)){
+					//存在相同的标签则，不增加
+					flag = "1";
+					return false;
+				}
+			});
+			//遍历之后，增加标签
+			if(flag == "0"){
+				$("#mylable").append("<a class=\"btn btn-info btn-rounded\" onclick=\"deleteLable(this)\" data-lableid="+lableid+">"+lable+"</a>");
+			}
 			$(obj).remove();
+			
 		}
 		
 		//删除标签
 		function deleteLable(obj){
 			var lable = $(obj).text();
 			var lableid = $(obj).data("lableid"); //lableid
-			console.log(lableid);
-			$("#alllable").append("<button type=\"button\" onclick=\"selectLable(this)\" class=\"btn btn-outline btn-info\" data-lableid="+lableid+">"+lable+"</button>");
+			
+			var flag = "0";
+			$("#alllable").children().each(function(){
+				var lab = $(this).text();
+				 if($.trim(lab) == $.trim(lable)){
+					//存在相同的标签则，不增加
+					flag = "1";
+					return false;
+				}
+			});
+			if(flag == "0"){
+				$("#alllable").append("<button type=\"button\" onclick=\"selectLable(this)\" class=\"btn btn-outline btn-info\" data-lableid="+lableid+">"+lable+"</button>");
+			}
 			$(obj).remove();
+			
 		}
 		
 	
@@ -220,6 +266,8 @@
 		
 		//提交，新增博客
 		function submit(){
+			var articleId = "${articleLableComment.aTarticle.vcArticleid }";
+			console.log(articleId);
 			var articletitle = $("#articletitle").val();
 			var articletype = $(".input-group-btn button").data("typeid");//id存放在data当中	
 			var articlecontent = $('.summernote').code();
@@ -228,8 +276,7 @@
 			var vcLableid = ""; 
 			$("#mylable").children().each(function(){
 				var lable = $(this).data("lableid");
-				console.log(lable);
-				if (lable !== null || lable !== undefined || lable !== '') {
+				if (lable != null && lable != undefined && lable != '') {
 					vcLableid = vcLableid  + $(this).data("lableid") + ",";
 				}	
 			});
@@ -243,11 +290,21 @@
 					}
 				}
 			});
-			console.log(vcLableid);
+			
+			var url = "";
+			/*如果id不为空，则请求修改*/
+			if (articleId != null && articleId != undefined && articleId != '') {
+				url = "${pageContext.request.contextPath}/admin/saveUpdateArticle.action";
+			}else{
+				url = "${pageContext.request.contextPath}/admin/savearticle.action";
+			}
+			
+			console.log(articleId + "," + url);
+
 			$.ajax({ 
-					url:"${pageContext.request.contextPath}/admin/savearticle.action",
+					url: url,
 					type:"POST",
-					data:{'vcArticletitle' : articletitle,'cArticletype' : articletype,'vcArticlecontent' : articlecontent ,'vcLableid' : vcLableid},
+					data:{'articleId':articleId ,'vcArticletitle' : articletitle,'cArticletype' : articletype,'vcArticlecontent' : articlecontent ,'vcLableid' : vcLableid},
 					success: function(data){
 						//假设返回的json数据里有status及info2个属性
 						//有时候可以直接ajaxobj.status或者ajaxobj["status"]去访问  
@@ -262,7 +319,14 @@
 						{
 							alert("发表成功");
 							//刷新页面
-							window.location.href ="${pageContext.request.contextPath}/admin/writearticle.action";
+							/*如果id不为空，则请求修改*/
+							if (articleId != null && articleId != undefined && articleId != '') {
+								// 如果是修改，则刷新列表页面
+								window.location.href ="${pageContext.request.contextPath}/admin/findAllArticlePage.action?pageNow=1";
+							}else{
+								//新增博文刷新写博客页面
+								window.location.href ="${pageContext.request.contextPath}/admin/writearticle.action";
+							}
 						}
 					},
 					error:function(ajaxobj)

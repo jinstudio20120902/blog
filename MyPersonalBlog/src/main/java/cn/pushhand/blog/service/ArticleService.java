@@ -30,4 +30,17 @@ public interface ArticleService {
 	 * 根据博客id
 	 */
 	TarticleLableComment selectArticltById(String articleId);
+	
+	/*
+	 * 删除博客
+	 */
+	int deleteArticle(String articleId);
+	
+	
+	/*
+	 * 修改博客，以及标签
+	 */
+	int updateArticleLable(Tarticle tarticle , List<Tarticlelable> tarticleLableList);
+	
+
 }

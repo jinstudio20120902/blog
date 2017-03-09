@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -77,8 +78,13 @@ public class ArticleAdminController {
 	@RequestMapping("/admin/savearticle")
 	@ResponseBody
 	public Result AddArticle(HttpServletRequest request ,
-					HttpServletResponse response) throws IOException{
+					HttpServletResponse response) throws IOException, ServletException{
 		Result result = new Result();
+		/*
+		 * 首先获取文章id
+		 * 如果id ！= null , 则为修改文章 ，请求转发到updateArticle.action
+		 * 否则为新增 
+		 */
 		Tarticle tarticle = new Tarticle();
 		//设置ID
 		tarticle.setVcArticleid(UUID.randomUUID().toString());
@@ -130,12 +136,21 @@ public class ArticleAdminController {
 		
 		//添加文章和标签
 		articleService.AddArticleLable(tarticle , tarticleLableList);
-		
-		
 		//返回信息，提示成功
 		result.setStatus(1);
 		result.setSuccess(true);
 		return result;
+	
+	/*
+		request.getRequestDispatcher("/admin/saveUpdateArticle.action").forward(request, response);
+		
+		result.setStatus(1);
+		result.setSuccess(true);
+		return result;
+		*/
+		
+		
+		
 		
 	}
 	
@@ -169,7 +184,6 @@ public class ArticleAdminController {
 	/*
 	 *  分页获取文章列表
 	 */
-	@SuppressWarnings("unused")
 	@RequestMapping("/admin/findAllArticlePage")
 	public String findAllArticleByPage(HttpServletRequest request ,
 			HttpServletResponse response){
@@ -225,6 +239,127 @@ public class ArticleAdminController {
 		return "article";
 		
 	}
+	
+	
+	/*
+	 * 删除文章
+	 */
+	@RequestMapping("/admin/deleteArticltById")
+	@ResponseBody
+	public Result deleteArticle(HttpServletRequest request ,
+			HttpServletResponse response){
+		Result result = new Result();
+		
+		String articleId = request.getParameter("articleId");
+		if(articleId == null){
+			result.setStatus(0);
+			result.setSuccess(false);
+			result.setMessage("文章不存在");
+			return result;
+		}
+		
+		//删除文章
+		articleService.deleteArticle(articleId);
+
+		
+		result.setStatus(1);
+		result.setSuccess(true);
+		
+		return result;
+		
+	}
+	
+	/*
+	 * 修改文章
+	 * 只需要修改文章
+	 * 根据文章id
+	 */
+	@RequestMapping("/admin/updateArticltById")
+	public String updateArticle(HttpServletRequest request ,
+			HttpServletResponse response){
+		
+		String articleId = request.getParameter("articleId");
+		if(articleId == null){
+			//重定向提示，文章不存在
+		}
+		
+		//根据文章id获取到TarticleLableComment对象
+		TarticleLableComment alc = articleService.selectArticltById(articleId);
+		
+		request.setAttribute("articleLableComment", alc);
+		
+		//获取类型列表
+		List<Tarticletype> aTarticletypes = new ArrayList<Tarticletype>();
+		aTarticletypes = articleTypeService.findAllArticleTypes();
+		request.setAttribute("articletypes", aTarticletypes);
+		
+		//获取文章标签
+		List<Tlable> lables = new ArrayList<Tlable>();
+		lables = lableService.findAllLables();
+		request.setAttribute("lables", lables);
+		
+		return "form_editors";
+		
+	}
+	
+	/*
+	 * 保存修改
+	 */
+	@RequestMapping("/admin/saveUpdateArticle")
+	@ResponseBody
+	public Result saveUpdateArticle(HttpServletRequest request ,
+			HttpServletResponse response){
+		
+		Result result = new Result();
+	
+		//设置ID
+		String articleId = request.getParameter("articleId");
+		
+		//获取到原文章信息
+		TarticleLableComment alc = articleService.selectArticltById(articleId);
+		
+		alc.getaTarticle().setVcArticleid(articleId);
+		//标题
+		alc.getaTarticle().setVcArticletitle(request.getParameter("vcArticletitle").toString());
+		//类型
+		alc.getaTarticle().setcArticletype(request.getParameter("cArticletype").toString());
+		//内容
+		alc.getaTarticle().setVcArticlecontent(request.getParameter("vcArticlecontent").toString());
+		
+		
+		//解析传入的lable id
+		//拆分,以逗号拆分
+		List<String> lableids = 
+				Arrays.asList(request.getParameter("vcLableid").toString().split(","));
+		
+		
+		List<Tarticlelable> tarticleLableList = new ArrayList<Tarticlelable>();
+		
+		//添加文章标签
+		Iterator<String> it = lableids.iterator();
+		while(it.hasNext()){
+			String val = it.next();
+			if( val != null){
+				Tarticlelable tarticlelable = new Tarticlelable();
+				tarticlelable.setVcLableid(val);
+				tarticlelable.setVcArticleid(articleId);
+				tarticleLableList.add(tarticlelable);
+			}
+		}
+		
+		//调用sercice处理数据 
+		articleService.updateArticleLable(alc.getaTarticle(), tarticleLableList);
+		
+		
+		//返回信息，提示成功
+		result.setStatus(1);
+		result.setSuccess(true);
+		return result;
+		
+		
+		
+	}
+	
 	
 	
 
