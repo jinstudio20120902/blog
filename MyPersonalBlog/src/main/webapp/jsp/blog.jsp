@@ -65,8 +65,12 @@
 	                            </span>
 	                        </div>
 							<!-- 文章内容摘要 -->
-							<!-- <p></p>  -->
+	                         <div class="content">
+	                           ${articleLableComment.aTarticle.vcArticlecontent}
+	                         </div> 
 	                       
+	                       
+	                    
 	                        <div class="row">
 	                            <div class="col-md-6">
 	                                <h5>标签：</h5>
@@ -199,6 +203,15 @@
     <!--<script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>-->
 	<script src="<%=baseViewPath %>js/plugins/sweetalert/sweetalert.min.js"></script>
 	<script type="text/javascript">
+	  
+	    //把文章列表里面的图片标签去掉
+      	$(".content").children("img").remove();
+        //然后显示摘要
+        $(".content").html(function(){
+	        	$(this).html($(this).html().substring(0,190));
+        });   
+      
+             
 		//编辑
 		$(".dropdown-toggle").click(function(){
 			 
@@ -254,8 +267,11 @@
 			    });
 		
 		});
+		
+		
+                
 	</script>
-
+   
 	
 </body>
 
