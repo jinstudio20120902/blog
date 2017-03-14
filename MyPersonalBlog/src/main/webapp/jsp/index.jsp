@@ -37,7 +37,7 @@
                             <span><img alt="image" class="img-circle" src="img/profile_small.jpg" /></span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="clear">
-                               <span class="block m-t-xs"><strong class="font-bold">博主名称</strong></span>
+                                <span class="block m-t-xs"><strong class="font-bold">博主名称</strong></span>
                                 <span class="text-muted text-xs block">管理<b class="caret"></b></span>
                                 </span>
                             </a>

@@ -42,7 +42,7 @@
 
             <form class="m-t" role="form" method="post" action="${pageContext.request.contextPath}/user/login.action">
            	 <div class="form-group">
-                    <input type="email" name="vcUsername" class="form-control" placeholder="用户名" required="">
+                    <input type="text" name="vcUsername" class="form-control" placeholder="用户名" required="">
                 </div>
                 <div class="form-group">
                     <input type="password" name="vcPassword"  class="form-control" placeholder="密码" required="">

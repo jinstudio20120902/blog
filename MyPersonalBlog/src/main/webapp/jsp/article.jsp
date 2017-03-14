@@ -14,9 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
 
-    <title>我的个人博客 - 文章详情</title>
-    
-    <link rel="shortcut icon" href="favicon.ico"> 
+    <title>我的个人博客 - 文章详情</title> 
 	<link href="<%=baseViewPath %>css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
     <link href="<%=baseViewPath %>css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
 

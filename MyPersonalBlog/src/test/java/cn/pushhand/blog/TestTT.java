@@ -7,7 +7,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import cn.pushhand.blog.model.TarticleLableComment;
+import cn.pushhand.blog.model.TuserVo;
 import cn.pushhand.blog.service.ArticleLableCommentService;
+import cn.pushhand.blog.service.UserArticleService;
 import cn.pushhand.blog.service.impl.ArticleLableCommentServiceImpl;
 
 public class TestTT {
@@ -20,18 +22,18 @@ public class TestTT {
 		ApplicationContext context = 
 			new ClassPathXmlApplicationContext(new String[]{"classpath:spring-base.xml" , "classpath:spring-mybatis.xml"});
 		
-		ArticleLableCommentService service = 
-				(ArticleLableCommentService) context.getBean("articleLableCommentService");
+		UserArticleService service = 
+				(UserArticleService) context.getBean("userArticleService");
 		
+	
+		TuserVo ls = service.findArticleByUser("001");
 		
-		System.out.println(service.fundArticleCountByUser("001"));
+		System.out.println(ls);
 		
-		List<TarticleLableComment> ls = service.findAllArticleByPage("001", 1 , 2);
-		
-		for(int i = 0 ; i< ls.size() ; i++){
+		for(int i = 0 ; i< ls.getArticleList().size() ; i++){
 			
 			
-			System.out.println(ls.get(i).toString());
+			System.out.println(ls.getArticleList().get(i).toString());
 			
 			
 			

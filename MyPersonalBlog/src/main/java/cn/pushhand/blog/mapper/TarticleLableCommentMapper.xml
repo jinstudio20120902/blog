@@ -15,14 +15,19 @@
   </resultMap>
   
   <resultMap id="AllCollumnResultMap" type="cn.pushhand.blog.model.TarticleLableComment" extends="BaseResultMap">
-  
+  	<!-- 文章类型  -->
+  	<result column="vc_typeid" property="articletype.vcTypeid" jdbcType="VARCHAR" />
+  	<result column="vc_typename" property="articletype.vcTypename" jdbcType="VARCHAR" />
+  	<!-- 标签 -->
   	<collection property="articleLables" ofType="cn.pushhand.blog.model.Tlable">
   		<id property="vcLableid" column="vc_lableid" jdbcType="VARCHAR"></id>
   		<result property="vcLablename" column="vc_lablename" jdbcType="VARCHAR"></result>
   	</collection>
+  	<!-- 评论 -->
   	
   </resultMap>
   
+  <!-- 字段 -->
   <sql id="Article_Base_Column" >
     a.vc_articleid, a.vc_articletitle, a.vc_articlecontent, a.c_articletype, a.vc_userid, a.dt_createtime, 
     a.dt_publishtime, n_clicknum
@@ -40,17 +45,25 @@
     c.vc_lableid, c.vc_lablename
   </sql>
   
-  <!-- 不分页查询 -->
+  <sql id="Comment_Base_Colmnt">
+  	e.vc_commentid, e.vc_articleid , e.vc_commentcontent , e.dt_comenttime , e.vc_visitor
+  </sql>
+  
+  <!-- 查询用户所有文章 -->
   <select id="findAllArticleByUser" parameterType="java.lang.String" resultMap="AllCollumnResultMap">
   	select
   	<include refid="Article_Base_Column" />
   	,
+  	<include refid="ArticleType_Base_Columnt" />
+  	,
   	<include refid="Lable_Base_Columnt" />
   	
-  	from tarticle a , tarticlelable b , tlable c
+  	from tarticle a , tarticlelable b , tlable c , tarticletype d 
   	where a.vc_userid = #{userId,jdbcType=VARCHAR}
+  	and a.c_articletype = d.vc_typeid
   	and a.vc_articleid = b.vc_articleid
   	and b.vc_lableid = c.vc_lableid
+  	order by a.dt_publishtime desc
   
   </select>
   
