@@ -1,9 +1,15 @@
 package cn.pushhand.blog.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Tarticle {
-    private String vcArticleid;
+public class Tarticle implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6933032851972278120L;
+
+	private String vcArticleid;
 
     private String vcArticletitle;
 

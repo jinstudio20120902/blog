@@ -129,6 +129,18 @@
 		    <groupId>org.apache.shiro</groupId>
 		    <artifactId>shiro-spring</artifactId>
 		    <version>1.2.5</version>
-		</dependency>		
+		</dependency>
+		
+		<!-- redis -->	
+		<dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <version>1.6.1.RELEASE</version>
+        </dependency>
+		<dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		    <version>2.9.0</version>
+		</dependency> 	
 	</dependencies>
 </project>

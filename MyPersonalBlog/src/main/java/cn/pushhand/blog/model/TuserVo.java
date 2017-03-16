@@ -1,5 +1,6 @@
 package cn.pushhand.blog.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,9 +10,13 @@ import java.util.List;
  * @author Errol
  *
  */
-public class TuserVo extends Tuser {
+public class TuserVo extends Tuser implements Serializable{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5770465391726770853L;
 	/*
 	 * 所有文章 
 	 */

@@ -29,6 +29,7 @@ import cn.pushhand.blog.service.ArticleService;
 import cn.pushhand.blog.service.ArticleTypeService;
 import cn.pushhand.blog.service.LableService;
 import cn.pushhand.blog.util.PageUtil;
+import cn.pushhand.blog.util.RedisCacheUtil;
 import cn.pushhand.blog.util.Result;
 
 /**
@@ -47,6 +48,8 @@ public class ArticleAdminController {
 	private LableService lableService;
 	@Autowired
 	private ArticleLableCommentService articleLableService;
+	@Autowired
+	private RedisCacheUtil redisCache;
 	
 	
 	/*
@@ -136,6 +139,9 @@ public class ArticleAdminController {
 		
 		//添加文章和标签
 		articleService.AddArticleLable(tarticle , tarticleLableList);
+		//清空缓存
+		redisCache.deleteKey(user.getVcUserid()+"_articleList");
+		
 		//返回信息，提示成功
 		result.setStatus(1);
 		result.setSuccess(true);

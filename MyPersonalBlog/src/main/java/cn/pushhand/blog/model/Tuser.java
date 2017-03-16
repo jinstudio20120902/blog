@@ -1,7 +1,14 @@
 package cn.pushhand.blog.model;
 
-public class Tuser {
-    private String vcUserid;
+import java.io.Serializable;
+
+public class Tuser implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3444433351317859757L;
+
+	private String vcUserid;
 
     private String vcUsername;
 

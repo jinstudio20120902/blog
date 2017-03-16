@@ -1,9 +1,15 @@
 package cn.pushhand.blog.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Tcomment {
-    private String vcCommentid;
+public class Tcomment implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 2310724477374839635L;
+
+	private String vcCommentid;
 
     private String vcArticleid;
 

@@ -1,7 +1,14 @@
 package cn.pushhand.blog.model;
 
-public class Tlable {
-    private String vcLableid;
+import java.io.Serializable;
+
+public class Tlable implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1584431650222069373L;
+
+	private String vcLableid;
 
     private String vcLablename;
 

@@ -5,15 +5,15 @@ import org.springframework.stereotype.Service;
 
 import cn.pushhand.blog.mapper.TarticlelableMapper;
 import cn.pushhand.blog.model.Tarticlelable;
-import cn.pushhand.blog.service.ArticleLable;
+import cn.pushhand.blog.service.ArticleLableService;
 
 /**
  * 文章标签实现类
  * @author Errol
  *
  */
-@Service("articleLable")
-public class ArticleLableImpl implements ArticleLable {
+@Service("articleLableService")
+public class ArticleLableServiceImpl implements ArticleLableService {
 	
 	@Autowired
 	TarticlelableMapper articleLableMapper;

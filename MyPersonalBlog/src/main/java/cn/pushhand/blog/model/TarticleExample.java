@@ -1,11 +1,17 @@
 package cn.pushhand.blog.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TarticleExample {
-    protected String orderByClause;
+public class TarticleExample implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -888838911112237480L;
+
+	protected String orderByClause;
 
     protected boolean distinct;
 

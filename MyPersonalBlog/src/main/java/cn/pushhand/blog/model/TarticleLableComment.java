@@ -1,5 +1,6 @@
 package cn.pushhand.blog.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,8 +9,13 @@ import java.util.List;
  * @author Errol
  *
  */
-public class TarticleLableComment{
+public class TarticleLableComment implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4908794229969676032L;
+
 	/*
 	 * 文章 
 	 */

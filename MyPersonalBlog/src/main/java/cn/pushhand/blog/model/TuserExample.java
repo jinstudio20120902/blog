@@ -1,10 +1,16 @@
 package cn.pushhand.blog.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TuserExample {
-    protected String orderByClause;
+public class TuserExample implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8203051510136374727L;
+
+	protected String orderByClause;
 
     protected boolean distinct;
 

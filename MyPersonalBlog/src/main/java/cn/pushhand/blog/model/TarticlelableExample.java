@@ -1,10 +1,16 @@
 package cn.pushhand.blog.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TarticlelableExample {
-    protected String orderByClause;
+public class TarticlelableExample implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5084751674572195569L;
+
+	protected String orderByClause;
 
     protected boolean distinct;
 

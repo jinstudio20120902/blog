@@ -23,6 +23,7 @@ import cn.pushhand.blog.service.ArticleService;
  * @author Errol
  *
  */
+import cn.pushhand.blog.util.RedisCacheUtil;
 @Service("articleService")
 public class ArticleServiceImpl implements ArticleService {
 	@Autowired
@@ -35,6 +36,8 @@ public class ArticleServiceImpl implements ArticleService {
 	private TcommentMapper commentMapper;
 	@Autowired
 	private TarticletypeMapper articleTypeMapper;
+	@Autowired
+	RedisCacheUtil redisCache;
 
 	@Override
 	public int AddArticle(Tarticle tarticle) {
@@ -75,6 +78,8 @@ public class ArticleServiceImpl implements ArticleService {
 	public TarticleLableComment selectArticltById(String articleId) {
 		
 		TarticleLableComment alc = new TarticleLableComment();
+		
+	
 		
 		//查询文章内容
 		alc.setaTarticle(articleMapper.selectByPrimaryKey(articleId));

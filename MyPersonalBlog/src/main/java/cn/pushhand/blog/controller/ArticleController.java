@@ -14,6 +14,7 @@ import cn.pushhand.blog.model.TuserVo;
 import cn.pushhand.blog.service.ArticleService;
 import cn.pushhand.blog.service.UserArticleService;
 import cn.pushhand.blog.service.UserService;
+import cn.pushhand.blog.util.RedisCacheUtil;
 
 /**
  * 文章controller，基于访客的
@@ -29,7 +30,8 @@ public class ArticleController {
 	private UserArticleService userArticleService;
 	@Autowired
 	private ArticleService articleService;
-	
+	@Autowired
+	private RedisCacheUtil redisCache;
 	
 	/*
 	 * 基于访客的controller
@@ -61,8 +63,16 @@ public class ArticleController {
 		userArticle.setVcUsername(username);
 		userArticle.setVcUserid(user.getVcUserid());
 		
+		//redis缓存博主首页访问量 + 1
+		//key值：username_Blog_ViewCount
+		String key = username+"_Blog_ViewCount";
+		redisCache.increseCacheObject(key);
 		
+		//获取访问量
+		String viewCount = (String) redisCache.getCacheObject(key);
+
 		request.setAttribute("bloger", userArticle);
+		request.setAttribute("viewCount", viewCount);
 		
 		return "blogindex";
 		
@@ -77,8 +87,7 @@ public class ArticleController {
 	public String findArticltById(@PathVariable("username") String username , @PathVariable("articleId") String articleId , 
 						HttpServletRequest request){
 		
-		//获取文章id
-		//String articleId = request.getParameter("articleId");
+		
 		//判断是否为空，为空则抛出异常 
 		TarticleLableComment alc = articleService.selectArticltById(articleId);
 		

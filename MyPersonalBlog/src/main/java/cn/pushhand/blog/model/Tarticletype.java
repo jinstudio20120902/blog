@@ -1,7 +1,14 @@
 package cn.pushhand.blog.model;
 
-public class Tarticletype {
-    private String vcTypeid;
+import java.io.Serializable;
+
+public class Tarticletype implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8931809778796545483L;
+
+	private String vcTypeid;
 
     private String vcTypename;
 

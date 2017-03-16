@@ -7,7 +7,7 @@ import cn.pushhand.blog.model.Tarticlelable;
  * @author Errol
  *
  */
-public interface ArticleLable {
+public interface ArticleLableService {
 	
 	/*
 	 * 文章添加标签

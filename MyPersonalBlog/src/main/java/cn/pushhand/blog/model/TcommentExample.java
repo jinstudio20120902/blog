@@ -1,11 +1,17 @@
 package cn.pushhand.blog.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TcommentExample {
-    protected String orderByClause;
+public class TcommentExample implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4220917514464170107L;
+
+	protected String orderByClause;
 
     protected boolean distinct;
 
